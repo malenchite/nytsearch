@@ -3,10 +3,6 @@
  * @returns {string} URL for NYT API based on form inputs
  */
 
-var query = $("#search-term").val()
-var beginDate = $("#start-year").val()
-var endDate = $("#end-year").val()
-
 
 // var beginDate = "2020"
 // query = "elections"
@@ -15,13 +11,17 @@ var endDate = $("#end-year").val()
 
 function buildQueryURL() {
 
-  if (beginDate === false && endDate === false) { queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm" }
+  var query = $("#search-term").val()
+  var beginDate = $("#start-year").val()
+  var endDate = $("#end-year").val()
 
-  else if (beginDate === true && endDate === false) {
+  if (beginDate === "" && endDate === "") { queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm" }
+
+  else if (beginDate !== "" && endDate === "") {
     queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&begin_date=" + beginDate + "0101&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm"
   }
 
-  else if (beginDate === false && endDate === true)
+  else if (beginDate === "" && endDate !== "")
     queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&end_date=" + endDate + "1231&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm"
 
   else {
@@ -32,7 +32,7 @@ function buildQueryURL() {
 
 }
 
-// console.log(queryURL)
+
 /**
  * takes API data (JSON/object) and turns it into elements on the page
  * @param {object} NYTData - object containing NYT API data
@@ -43,7 +43,36 @@ function buildQueryURL() {
 
 function updatePage(NYTData) {
 
+  var recordCount = parseInt($("#record-count").val())
 
+  for (var i = 0; i < recordCount; i++) {
+
+    var articleDiv = $("<div>")
+    var headlineDiv = $("<div>")
+    var bylineDiv = $("<div>")
+    var numberSpan = $("<span>")
+    var headlineSpan = $("<span>")
+
+    articleDiv.addClass("card article-card mb-3 pt-3 pb-3 pl-4 pr-4")
+    numberSpan.addClass("article-num")
+    headlineSpan.addClass("headline")
+    bylineDiv.addClass("byline")
+
+    numberSpan.text(i + 1)
+    headlineSpan.text(" " + NYTData.response.docs[i].headline.main)
+
+    if (NYTData.response.docs[i].byline.original) {
+      bylineDiv.text(NYTData.response.docs[i].byline.original)
+    }
+
+
+    headlineDiv.append(numberSpan, headlineSpan)
+    articleDiv.append(headlineDiv, bylineDiv)
+
+    $("#article-section").append(articleDiv)
+
+
+  }
 
 
 }
@@ -64,7 +93,7 @@ $("#run-search").on("click", function (event) {
 
   // Build the query URL for the ajax request to the NYT API
   var queryURL = buildQueryURL();
-
+  console.log(queryURL)
   // Make the AJAX request to the API - GETs the JSON data at the queryURL.
   // The data then gets passed as an argument to the updatePage function
   $.ajax({
