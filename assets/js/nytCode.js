@@ -3,33 +3,26 @@
  * @returns {string} URL for NYT API based on form inputs
  */
 
-
-// var beginDate = "2020"
-// query = "elections"
-// var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&begin_date=" + beginDate + "&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm"
-
-
 function buildQueryURL() {
 
-  var query = $("#search-term").val()
-  var beginDate = $("#start-year").val()
-  var endDate = $("#end-year").val()
+  var query = $("#search-term").val();
+  var beginDate = $("#start-year").val();
+  var endDate = $("#end-year").val();
 
-  if (beginDate === "" && endDate === "") { queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm" }
-
-  else if (beginDate !== "" && endDate === "") {
-    queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&begin_date=" + beginDate + "0101&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm"
+  if (beginDate === "" && endDate === "") {
+    queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm";
+  } else if (beginDate !== "" && endDate === "") {
+    queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&begin_date=" + beginDate + "0101&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm";
   }
 
   else if (beginDate === "" && endDate !== "")
-    queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&end_date=" + endDate + "1231&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm"
+    queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&end_date=" + endDate + "1231&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm";
 
   else {
-    queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&begin_date=" + beginDate + "0101&end_date=" + endDate + "1231&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm"
+    queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + query + "&begin_date=" + beginDate + "0101&end_date=" + endDate + "1231&api-key=S5QfG34XsbEFdDAFYXy4SCV4EvNGfjrm";
   }
 
   return queryURL;
-
 }
 
 
@@ -37,44 +30,34 @@ function buildQueryURL() {
  * takes API data (JSON/object) and turns it into elements on the page
  * @param {object} NYTData - object containing NYT API data
  */
-
-
-
-
 function updatePage(NYTData) {
 
-  var recordCount = parseInt($("#record-count").val())
+  var recordCount = parseInt($("#record-count").val());
 
   for (var i = 0; i < recordCount; i++) {
+    var articleDiv = $("<div>");
+    var headlineDiv = $("<div>");
+    var bylineDiv = $("<div>");
+    var numberSpan = $("<span>");
+    var headlineSpan = $("<span>");
 
-    var articleDiv = $("<div>")
-    var headlineDiv = $("<div>")
-    var bylineDiv = $("<div>")
-    var numberSpan = $("<span>")
-    var headlineSpan = $("<span>")
+    articleDiv.addClass("card article-card mb-3 pt-3 pb-3 pl-4 pr-4");
+    numberSpan.addClass("article-num");
+    headlineSpan.addClass("headline");
+    bylineDiv.addClass("byline");
 
-    articleDiv.addClass("card article-card mb-3 pt-3 pb-3 pl-4 pr-4")
-    numberSpan.addClass("article-num")
-    headlineSpan.addClass("headline")
-    bylineDiv.addClass("byline")
-
-    numberSpan.text(i + 1)
-    headlineSpan.text(" " + NYTData.response.docs[i].headline.main)
+    numberSpan.text(i + 1);
+    headlineSpan.text(" " + NYTData.response.docs[i].headline.main);
 
     if (NYTData.response.docs[i].byline.original) {
-      bylineDiv.text(NYTData.response.docs[i].byline.original)
+      bylineDiv.text(NYTData.response.docs[i].byline.original);
     }
 
+    headlineDiv.append(numberSpan, headlineSpan);
+    articleDiv.append(headlineDiv, bylineDiv);
 
-    headlineDiv.append(numberSpan, headlineSpan)
-    articleDiv.append(headlineDiv, bylineDiv)
-
-    $("#article-section").append(articleDiv)
-
-
+    $("#article-section").append(articleDiv);
   }
-
-
 }
 
 // Function to empty out the articles
