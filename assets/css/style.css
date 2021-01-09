@@ -15,3 +15,30 @@ h5 {
 button {
   background-color: white;
 }
+
+.card-header {
+  background-color: #edf0f1;
+}
+
+.article-num {
+  background-color: #21325a;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.article-card {
+  background-color: #edf0f1;
+}
+
+.headline {
+  font-size: 1.4rem;
+  color:  #21325a;
+  font-weight: bold;
+}
+
+.byline {
+  font-size: 0.8rem;
+  color:  #21325a; 
+}
