@@ -1,0 +1,17 @@
+header {
+  background-color: #21325a;
+  color: white;
+  padding: 4rem;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+h5 {
+  font-weight: bold;
+}
+
+button {
+  background-color: white;
+}

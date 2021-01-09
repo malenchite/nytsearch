@@ -8,16 +8,53 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
 
   <!-- Font Awesome CSS Icons (For cool glyphicons) -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" />
 
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
-
+  <header class="text-center">
+    <h1><i class="fa fa-newspaper"></i>New York Times Search</h1>
+  </header>
   <div class="container">
+    <section id="search-param" class="card mt-5 mb-3">
+      <div class="card-header">
+        <h5><i class="fa fa-file-alt"></i> Search Parameters</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <p>Search Term:</p>
+          <input type="text" id="search-term" class="form-control">
+        </div>
+        <div class="mb-3">
+          <p>Number of Records to Retrieve:</p>
+          <select type="text" id="record-count" class="form-control">
+            <option value="1">1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <p>Start Year (Optional):</p>
+          <input type="text" id="start-year" class="form-control">
+        </div>
+        <div class="mb-3">
+          <p>End Year (Optional):</p>
+          <input type="text" id="end-year" class="form-control">
+        </div>
+        <button id="run-search" class="btn"><i class="fa fa-search"></i> Search</button>
+        <button id="clear-all" class="btn"><i class="fa fa-trash-alt"></i> Clear Results</button>
+      </div>
+    </section>
+    <section>
+      <div class="card-header">
+        <h5><i class="fa fa-table"></i> Top Articles</h5>
+      </div>
+      <div id="article-section" class="card-body">
 
-
+      </div>
+    </section>
 
   </div>
 
